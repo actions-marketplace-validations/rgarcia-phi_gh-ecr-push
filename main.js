@@ -48,7 +48,10 @@ if (localImage.includes(',')) {
 if (direction === 'push') {
     const imagesToPush = getImagesToPush(localImage, image, isSemver);
     for (const imageToPush of imagesToPush) {
-        const uri = `${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/${imageToPush.remoteImage}`;
+        const uri = skipTag
+            ? imageToPush.remoteImage
+            : `${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/${imageToPush.remoteImage}`;
+
         console.log(`Pushing local image ${imageToPush.localImage} to ${uri}`);
         if (!skipTag) {
             run(`docker tag ${imageToPush.localImage} ${uri}`);
