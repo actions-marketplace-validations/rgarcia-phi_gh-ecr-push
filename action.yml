@@ -1,4 +1,4 @@
-name: Push to Amazon ECR
+name: Push to Amazon ECR with optional tagging
 author: rgarcia-phi
 description: Push a docker image to (or pull from) Amazon ECR.
 inputs:
