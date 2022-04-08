@@ -9,6 +9,7 @@ const localImage = core.getInput('local-image') || image;
 const awsRegion = core.getInput('region') || process.env.AWS_DEFAULT_REGION || 'us-east-1';
 const direction = core.getInput('direction') || 'push';
 const isSemver = core.getInput('is-semver');
+const skipTag = core.getInput('skip-tag');
 
 function run(cmd, options = {}) {
     if (!options.hide) {
@@ -49,7 +50,11 @@ if (direction === 'push') {
     for (const imageToPush of imagesToPush) {
         const uri = `${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/${imageToPush.remoteImage}`;
         console.log(`Pushing local image ${imageToPush.localImage} to ${uri}`);
-        run(`docker tag ${imageToPush.localImage} ${uri}`);
+        if (!skipTag) {
+            run(`docker tag ${imageToPush.localImage} ${uri}`);
+        } else {
+            console.log('Skip tagging because of skipTag=true')
+        }
         run(`docker push ${uri}`);
         imageUrl = uri;
     }

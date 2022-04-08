@@ -2,7 +2,7 @@
 
 Push an image to, or pull an image from Amazon's Elastic Container Registry.
 
-See also [Login to Amazon ECR Action](https://github.com/jwalton/gh-ecr-login).
+See also [Login to Amazon ECR Action](https://github.com/rgarcia-phi/gh-ecr-login).
 
 ## Setup
 
@@ -21,6 +21,7 @@ to your GitHub project:
 - `local-image` - The name of the local image to push (or to pull to).  If this is not specified, it will default to the same as `image`.  Note that if `image` is an array of images, this must be specified as this cannot be a list.
 - `region` - The ECR region to upload to. Defaults to 'us-east-1'.
 - `is-semver` - Specifies if the image follows the semantic versioning standard. It will push X, X.Y and X.Y.Z tags. Defaults to false.  Note that if this is true, the semver numbers come from the `local-image`.  If `image` is a list, the tags from each image will be discarded.
+- `skip-tag` - If the image must be tagged before the push is made, defaults to `false`.
 
 ## Outputs
 
@@ -34,7 +35,7 @@ Push an image to ECR:
 - run: docker build --tag my-image:v1 .
 - name: Push to ECR
   id: ecr
-  uses: jwalton/gh-ecr-push@v1
+  uses: rgarcia-phi/gh-ecr-push@v1
   with:
     access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -48,7 +49,7 @@ Push a "latest" tag:
 - run: docker build --tag my-image:v1 .
 - name: Push to ECR
   id: ecr
-  uses: jwalton/gh-ecr-push@v1
+  uses: rgarcia-phi/gh-ecr-push@v1
   with:
     access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -63,7 +64,7 @@ Push the local image 'my-image' to ECR as 'my-image:dev-XXXXX':
 - run: docker build --tag my-image .
 - name: Push to ECR
   id: ecr
-  uses: jwalton/gh-ecr-push@v1
+  uses: rgarcia-phi/gh-ecr-push@v1
   with:
     access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -78,7 +79,7 @@ Push an image to ECR (semver way):
 - run: docker build --tag my-image:v1 .
 - name: Push to ECR
   id: ecr
-  uses: jwalton/gh-ecr-push@v1
+  uses: rgarcia-phi/gh-ecr-push@v1
   with:
     access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -92,7 +93,7 @@ Pull an image from ECR:
 ```yaml
 - name: Pull from ECR
   id: ecr
-  uses: jwalton/gh-ecr-push@v1
+  uses: rgarcia-phi/gh-ecr-push@v1
   with:
     access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
